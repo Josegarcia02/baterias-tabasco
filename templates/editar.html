@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Editar Venta</h2>
+<form method="POST" class="card p-4">
+  <label>Cliente</label>
+  <input name="nombre" class="form-control mb-2" value="{{ venta.cliente }}" required>
+  <label>Teléfono</label>
+  <input name="telefono" class="form-control mb-2" value="{{ venta.telefono }}" required>
+  <label>Cantidad de baterías</label>
+  <input name="cantidad" id="cantidad" type="number" min="1" step="1" value="{{ venta.cantidad or 1 }}" class="form-control mb-2" required>
+  <div id="items"></div>
+  <p class="fw-bold">Total: <span id="total">$0.00</span></p>
+  <label>Garantía (meses)</label>
+  <input name="garantia" type="number" class="form-control mb-3" value="{{ venta.garantia }}" required>
+  <button class="btn btn-success">Guardar cambios</button>
+  <a href="/ventas" class="btn btn-secondary">Cancelar</a>
+</form>
+<script>
+  var opciones = '<option value="LTH L-24-530">LTH L-24-530</option><option value="LTH L-34-590">LTH L-34-590</option><option value="LTH L-47-550">LTH L-47-550</option><option value="LTH L-65-800">LTH L-65-800</option><option value="LTH L-35-575">LTH L-35-575</option><option value="DURALAST 65-800">DURALAST 65-800</option><option value="DURALAST 47-600">DURALAST 47-600</option><option value="DURALAST 35-600">DURALAST 35-600</option>';
+  var actuales = [{% for i in venta['items'] %}{bateria: "{{ i.bateria }}", precio: "{{ i.precio }}"},{% endfor %}];
+  function actualizaTotal() {
+    var total = 0;
+    document.querySelectorAll('.precio-item').forEach(function(el) { total += parseFloat(el.value) || 0; });
+    document.getElementById('total').textContent = '$' + total.toLocaleString('es-MX', {minimumFractionDigits: 2});
+  }
+  function generaItems() {
+    var n = parseInt(document.getElementById('cantidad').value) || 1;
+    if (n < 1) n = 1;
+    var html = '';
+    for (var k = 1; k <= n; k++) {
+      var cur = actuales[k-1] || {bateria: '', precio: ''};
+      html += '<div class="border rounded p-3 mb-3"><p class="fw-bold mb-2">Batería ' + k + '</p>'
+        + '<label class="form-label fw-bold mb-1">Batería</label>'
+        + '<select name="bateria_' + k + '" class="form-select mb-2">' + opciones.replace('value="' + cur.bateria + '"', 'value="' + cur.bateria + '" selected') + '</select>'
+        + '<label class="form-label fw-bold mb-1">Precio</label>'
+        + '<input name="precio_' + k + '" type="number" min="0" step="0.01" value="' + cur.precio + '" class="form-control precio-item mb-1" required></div>';
+    }
+    document.getElementById('items').innerHTML = html;
+    document.querySelectorAll('.precio-item').forEach(function(el) { el.addEventListener('input', actualizaTotal); });
+    actualizaTotal();
+  }
+  document.getElementById('cantidad').addEventListener('input', generaItems);
+  generaItems();
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nota {{ venta.id }}</title>
+<style>
+  body { font-family: Arial; width: 300px; margin: 0 auto; }
+  .titulo { text-align: center; font-weight: bold; font-size: 20px; }
+  .centro { text-align: center; }
+  hr { border: 1px dashed #000; }
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="titulo">CENTRO DE SERVICIO</div>
+<div class="centro">VENTA DE BATERIAS</div>
+<hr>
+
+<p>
+<b>FOLIO:</b> {{ venta.id }}<br>
+<b>CLIENTE:</b> {{ venta.cliente }}<br>
+<b>TEL:</b> {{ venta.telefono }}<br>
+<b>FECHA:</b> {{ venta.fecha }}<br>
+<b>PRODUCTO:</b> {{ venta.bateria }}<br>
+<b>PRECIO:</b> ${{ venta.precio }}
+</p>
+
+<hr>
+
+<p>
+<b>VENCE:</b> {{ venta.vence }}<br>
+<b>GARANTIA:</b> {{ venta.meses_garantia }} MESES EN PARTICULAR
+</p>
+
+<p class="centro"><b>{{ venta.estado }}</b></p>
+<hr>
+<p class="centro">¡GRACIAS POR SU COMPRA!</p>
+
+<button class="no-print" onclick="window.print()">Imprimir</button>
+
+</body>
+</html>

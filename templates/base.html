@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baterías Tabasco</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{ background:#1a1a1a; }
+    .navbar-brand{ font-weight:bold; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top" style="border-bottom: 4px solid #FFD100;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" style="padding: 2px 0;"><img src="/static/logo.png" alt="BATERIAS TABASCO" style="height: 46px; width: auto; object-fit: contain; background: white; padding: 2px 8px; border-radius: 6px; display: block;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if active == 'registrar' %}active{% endif %}" href="/">Registrar Venta</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if active == 'ventas' %}active{% endif %}" href="/ventas">Ventas</a>
+        </li>
+        {% if session.get('usuario') %}
+        <li class="nav-item">
+          <span class="nav-link text-warning">{{ session.get('usuario') }} ({{ session.get('rol') }})</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Salir</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+  {% block contenido %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

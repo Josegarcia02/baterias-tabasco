@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<h2 class="mt-3">Ventas y Garantias</h2>
+
+<form method="GET" action="/ventas" style="display:flex; gap:5px; margin:10px 0;">
+  <input type="text" name="buscar_telefono" class="form-control" placeholder="Buscar por teléfono... Ej: 9931323748" value="{{ buscar_telefono or '' }}">
+  <button type="submit" class="btn btn-warning fw-bold" style="width:auto; padding:12px;">BUSCAR</button>
+</form>
+
+{% if buscar_telefono %}
+<a href="/ventas" style="display:block; text-align:center; margin-bottom:10px; color:white;">Ver todas las ventas</a>
+{% endif %}
+
+{% for v in ventas %}
+<div class="card p-3 mb-2 text-dark">
+  <b>{{ v.cliente }} - Total: ${{ v.total }}</b><br>
+  {% for i in v['items'] %}{{ i.bateria }} - ${{ i.precio }}<br>{% endfor %}
+  Tel: {{ v.telefono }} | Venta: {{ v.fecha }}<br>
+  Vence: {{ v.vence }}<br>
+  {% if v.estado == 'VIGENTE' %}
+    <span class="verde">GARANTIA VIGENTE</span>
+  {% else %}
+    <span class="rojo">GARANTIA VENCIDA</span>
+  {% endif %}
+
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <a href="/editar/{{ v.id }}" style="background:#FFD100; color:#000; padding:6px 16px; border-radius:8px; font-size:14px; text-decoration:none;">Editar</a>
+    {% if session.get('rol') == 'admin' %}
+    <a href="/eliminar/{{ v.id }}" onclick="return confirm('¿Seguro que quieres eliminar esta venta?')" style="background:#000; color:white; padding:6px 16px; border-radius:8px; font-size:14px; text-decoration:none;">Eliminar</a>
+    {% endif %}
+    <a href="/nota/{{ v.id }}" target="_blank" style="background:#000; color:white; padding:5px 10px; border-radius:8px; text-decoration:none;">🖨️ Imprimir Nota</a>
+  </div>
+</div>
+    
+{% endfor %}
+
+{% endblock %}
