@@ -22,7 +22,7 @@
     <div id="items"></div>
     <p class="fw-bold mb-3" style="font-size: 18px;">Total: <span id="total">$0.00</span></p>
     <script>
-      var opciones = '<option value="LTH L-24-530">LTH L-24-530</option><option value="LTH L-34-590">LTH L-34-590</option><option value="LTH L-47-550">LTH L-47-550</option><option value="LTH L-65-800">LTH L-65-800</option><option value="LTH L-35-575">LTH L-35-575</option><option value="DURALAST 65-800">DURALAST 65-800</option><option value="DURALAST 47-600">DURALAST 47-600</option><option value="DURALAST 35-600">DURALAST 35-600</option>';
+      var opciones = '<option value="LTH L-24-530">LTH L-24-530</option><option value="LTH L-34-590">LTH L-34-590</option><option value="LTH L-47-550">LTH L-47-550</option><option value="LTH L-65-800">LTH L-65-800</option><option value="LTH L-35-575">LTH L-35-575</option><option value="DURALAST 65-800">DURALAST 65-800</option><option value="DURALAST 47-600">DURALAST 47-600</option><option value="DURALAST 35-600">DURALAST 35-600</option><option value="DURALAST 34/78-800">DURALAST 34/78-800</option><option value="DURALAST 75/86">DURALAST 75/86</option>';
       function actualizaTotal() {
         var total = 0;
         document.querySelectorAll('.precio-item').forEach(function(el) { total += parseFloat(el.value) || 0; });
@@ -52,9 +52,11 @@
 
     <label class="form-label fw-bold mb-1">Garantía</label>
     <select name="garantia" class="form-select form-select-lg mb-4">
+      <option value="2">Garantía 2 meses</option>
       <option value="3">Garantía 3 meses</option>
       <option value="4">Garantía 4 meses</option>
       <option value="6">Garantía 6 meses</option>
+      <option value="9">Garantía 9 meses</option>
       <option value="12">Garantía 12 meses</option>
     </select>
 
